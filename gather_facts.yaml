@@ -1,0 +1,18 @@
+---
+    - name: Get facts from IOS
+      connection: ansible.netcommon.network_cli
+      hosts: ios_routers
+      tasks:
+       - name: get IOS router facts
+         cisco.ios.ios_facts:
+          gather_network_resources: interfaces
+          gather_subnet: interfaces
+       - name: get Hostname
+         debug:
+           msg: "The Hostname is: {{ansible_net_hostname}}"
+       - name: get Interfaces
+         debug:
+           msg: "Interfaces: {{ansible_net_interfaces}}"
+       - name: get serial
+         debug: 
+           msg: "Serial number: {{ansible_net_seralnum}}"
