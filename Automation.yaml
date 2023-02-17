@@ -1,0 +1,133 @@
+
+---
+    - name: Configure R1
+   hosts: R1
+   gather_facts: false
+   tasks:
+    - name: Configure OSPF
+      ios_config:
+        lines:
+          - router ospf 1
+    - name: Configure int lo0
+      ios_config:
+        lines:
+          - ip address 1.1.1.1 255.255.255.255
+          - ip ospf 1 area 0
+          - no shut
+    - name: Configure int f2/0
+      ios_config:
+        lines:
+          - ip address 10.0.2.1 255.255.255.248
+          - ip ospf 1 area 0
+          - no shut
+        parents: interface FastEthernet2/0
+    - name: Configure int f1/0
+      ios_config:
+        lines:
+          - ip address 10.0.1.2 255.255.255.248
+          - ip ospf 1 area 0
+          - no shut
+        parents: interface FastEthernet1/0 
+     - name: Configure int f3/0
+       ios_config:
+         lines:
+           - ip address 192.168.0.1 255.255.255.0
+           - ip ospf 1 area 0
+           - no shut  
+        parents: interface FastEthernet3/0    
+         
+    - name: Configure R2
+   hosts: R2
+   gather_facts: false
+   tasks:
+    - name: Configure OSPF
+      ios_config:
+        lines:
+          - router ospf 1
+    - name: Configure int lo0
+      ios_config:
+        lines:
+          - ip address 2.2.2.2 255.255.255.255
+          - ip ospf 1 area 0
+          - no shut
+    - name: Configure int f2/0
+      ios_config:
+        lines:
+          - ip address 10.0.3.2 255.255.255.248
+          - ip ospf 1 area 0
+          - no shut
+        parents: interface FastEthernet2/0
+    - name: Configure int f0/0
+      ios_config:
+        lines:
+          - ip address 10.0.2.3 255.255.255.248
+          - ip ospf 1 area 0
+          - no shut
+        parents: interface FastEthernet0/0
+    - name: Configure int f1/0
+      ios_config:
+        lines:
+          - ip address 192.168.1.1 255.255.255.0
+          - ip ospf 1 area 0
+          - no shut
+        parents: interface FastEthernet1/0
+        
+    - name: Configure R3
+   hosts: R3
+   gather_facts: false
+   tasks:
+    - name: Configure OSPF
+      ios_config:
+        lines:
+          - router ospf 1
+    - name: Configure int lo0
+      ios_config:
+        lines:
+          - ip address 3.3.3.3 255.255.255.255
+          - ip ospf 1 area 0
+          - no shut
+    - name: Configure int f1/0
+      ios_config:
+        lines:
+          - ip address 10.0.3.1 255.255.255.248
+          - ip ospf 1 area 0
+          - no shut
+        parents: interface FastEthernet1/0
+    - name: Configure int f0/0
+      ios_config:
+        lines:
+          - ip address 10.0.4.2 255.255.255.248
+          - ip ospf 1 area 0
+          - no shut
+        parents: interface FastEthernet0/0
+        
+    - name: Configure R4
+   hosts: R4
+   gather_facts: false
+   tasks:
+    - name: Configure OSPF
+      ios_config:
+        lines:
+          - router ospf 1
+    - name: Configure int lo0
+      ios_config:
+        lines:
+          - ip address 4.4.4.4 255.255.255.255
+          - ip ospf 1 area 0
+          - no shut
+    - name: Configure int f1/0
+      ios_config:
+        lines:
+          - ip address 10.0.4.1 255.255.255.248
+          - ip ospf 1 area 0
+          - no shut
+        parents: interface FastEthernet1/0
+    - name: Configure int f0/0
+      ios_config:
+        lines:
+          - ip address 10.0.1.3 255.255.255.248
+          - ip ospf 1 area 0
+          - no shut
+        parents: interface FastEthernet0/0
+
+        
